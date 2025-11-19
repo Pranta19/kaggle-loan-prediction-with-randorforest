@@ -21,3 +21,13 @@ combined = pd.get_dummies(combined, drop_first=False)
 
 X_train_enc = combined.iloc[:len(X_train)].reset_index(drop=True)
 df_test_enc  = combined.iloc[len(X_train):].reset_index(drop=True)
+
+# 4️⃣ Train-validation split to check accuracy
+X_tr, X_val, y_tr, y_val = train_test_split(X_train_enc, y_train, test_size=0.2, random_state=42)
+
+model = RandomForestClassifier(n_estimators=300, max_depth=10, min_samples_split=50, random_state=42, n_jobs=-1)
+model.fit(X_tr, y_tr)
+
+y_val_pred = model.predict(X_val)
+print("Validation Accuracy:", accuracy_score(y_val, y_val_pred))
+print("Confusion Matrix:\n", confusion_matrix(y_val, y_val_pred))
