@@ -31,3 +31,13 @@ model.fit(X_tr, y_tr)
 y_val_pred = model.predict(X_val)
 print("Validation Accuracy:", accuracy_score(y_val, y_val_pred))
 print("Confusion Matrix:\n", confusion_matrix(y_val, y_val_pred))
+
+# 5️⃣ Train on full training data
+
+# 5️⃣ Train on full train set and predict test
+model.fit(X_train_enc, y_train)
+pred = model.predict(df_test_enc)
+
+submission = pd.DataFrame({'id': test_ids, 'loan_paid_back': pred})
+submission.to_csv(r"D:\ml 15 days\kaggle compitition2\submission.csv", index=False)
+print("Submission saved!")        
