@@ -14,3 +14,10 @@ if 'id' in df_test.columns:
     df_test = df_test.drop(columns=['id'])
 else:
     test_ids = df_test.index
+
+# 3️⃣ One-hot encode categorical columns
+combined = pd.concat([X_train, df_test], axis=0, ignore_index=True)
+combined = pd.get_dummies(combined, drop_first=False)
+
+X_train_enc = combined.iloc[:len(X_train)].reset_index(drop=True)
+df_test_enc  = combined.iloc[len(X_train):].reset_index(drop=True)
